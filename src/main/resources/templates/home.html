@@ -1,5 +1,6 @@
 <html>
 	<head th:replace="~{base :: head}"></head>
+		<meta charset="UTF-8"/>
 	<body>	
 		<div th:replace="~{base :: logo}"></div>
 
@@ -27,11 +28,11 @@
 							</div>
 							
 							<div>Produto</div> 
-							<div> <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto" /></div>
+							<div> <input class="form-control" th:value="${pedido.urlProduto}" value="Url do produto" /></div>
 							 
 							<div>Descrição</div>
 							<div>
-								<textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
+								<textarea class="form-control" th:text="${pedido.descricao}">Descrição do pedido</textarea>
 							</div>
 						</div>
 						<div class="col-12 col-sm-4">
