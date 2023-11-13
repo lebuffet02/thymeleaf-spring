@@ -17,12 +17,12 @@ public class PedidoController {
     @Autowired
     PedidoService service;
 
-    @GetMapping("/formulario")
+    @GetMapping
     public String formulario() {
         return "pedido/formulario";
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     public String novo(@RequestBody @Valid PedidoDTO pedidoDTO) {
         service.getPedido(pedidoDTO);
         return "pedido/formulario";
