@@ -1,54 +1,42 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-	<head th:replace="~{base :: head}"></head>
-	<meta charset="UTF-8">
-	<body>	
-		<div th:replace="~{base :: logo}"></div>
 
-		<div class="container">
-			<div th:replace="~{base :: titulo('Meus Pedidos')}"></div>
+<head th:replace="~{layoutBase :: head}">
+</head>
+
+<body>
+
+
+	<div th:replace="~{layoutBase :: navbar}"></div>
+
+	<div class="container mb-2">
+		<h1>Funcionarios</h1>
+		<table class="table table-light">
+			<tr class="table-dark">
+				<th></th>
+				<th scope="col">Nome</th>
+				<th scope="col">Cargo</th>
+				<th scope="col">Email</th>
+				<th scope="col">Salario</th>
+				<th scope="col">Setor</th>
+				<th scope="col"></th>
+			</tr>
+
+			<tr th:each="func : ${funcionarios}">
+				<th scope="row"></th>
+				<td><span th:text="${func.nome}"></span></td>
+				<td><span th:text="${func.cargo}"></span></td>
+				<td><span th:text="${func.email}"></td>
+				<td>R$<span th:text="${func.salario}"></span></td>
+				<td><span th:text="${func.setor}"></span></td>
+				<td class="buttons "><a th:href="@{form/{id}(id=${func.id})}"
+					th:method="get" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+					<a th:href="@{delete/{id}(id=${func.id})}" th:method="delete"
+					class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+			</tr>
+		</table>
 		
-			<nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-				<div class="navbar-nav">
-					<a th:classappend="${status} == null ? 'active'" class="nav-item nav-link" href="/home">Todos</a>
-					<a th:classappend="${status} == 'aguardando' ? 'active'" class="nav-item nav-link" href="/home/aguardando">Aguardando</a>
-					<a th:classappend="${status} == 'aprovado' ? 'active'" class="nav-item nav-link" href="/home/aprovado">Aprovado</a>
-					<a th:classappend="${status} == 'entregue' ? 'active'" class="nav-item nav-link" href="/home/entregue">Entregue</a>
-				</div>
-				<a href="/pedido/formulario"><button class="btn btn-outline-secondary my-2 my-sm-0">Novo</button></a>
-			</nav>
-		
-			<div class="card mb-3" th:each="pedido : ${pedidos}">
-			
-				<th:block th:switch="${pedido.status.name()}">
-					<div th:case="'AGUARDANDO'" class="card-header alert-warning" th:text="${pedido.nomeProduto}">Nome do Produto</div>
-					<div th:case="'APROVADO'" class="card-header alert-success" th:text="${pedido.nomeProduto}">Nome do Produto</div>
-					<div th:case="'ENTREGUE'" class="card-header alert-dark" th:text="${pedido.nomeProduto}">Nome do Produto</div>
-				</th:block>
-			
-				<div class="card-body">
-					<div class="row">
-						<div class="col-12 col-sm-8 mb-3">
-							<div class="row ">
-								<div class="col-md-5">Valor: <span th:if="${pedido.valorNegociado} != null" th:text="${'R$ ' + #numbers.formatDecimal(pedido.valorNegociado, 3, 'POINT', 2, 'COMMA')}">200,99</span></div>
-								<div class="col-md-6">Data da entrega: <span th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MM/yyyy')}">10/02/2020</span></div>
-							</div>
-							
-							<div>Produto</div> 
-							<div> <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto" /></div>
-							 
-							<div>Descrição</div>
-							<div>
-								<textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
-							</div>
-						</div>
-						<div class="col-12 col-sm-4">
-							<div>
-								<img class="img-thumbnail" th:src="${pedido.urlImagem}" src="" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</body>
+		<a href="/form"><button class="btn btn-dark">Adicionar
+				funcionario</button></a>
+	</div>
+</body>
+
 </html>
