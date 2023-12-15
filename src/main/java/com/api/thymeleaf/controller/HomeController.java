@@ -1,13 +1,11 @@
 package com.api.thymeleaf.controller;
 
 import com.api.thymeleaf.constants.FuncionarioSetor;
-import com.api.thymeleaf.entity.Funcionario;
 import com.api.thymeleaf.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -16,15 +14,7 @@ public class HomeController {
     private FuncionarioRepository funcRepository;
 
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        List<Funcionario> funcionarios = funcRepository.findAll();
-
-        model.addAttribute("funcionarios", funcionarios);
-        return "home";
-    }
-
-    //    @GetMapping
+//    @GetMapping
 //    public ModelAndView home() {
 //        ModelAndView mv = new ModelAndView("home");
 //        mv.addObject("pedidos", service.getPedidos());
@@ -32,13 +22,22 @@ public class HomeController {
 //    }
 
 
-    @GetMapping
-    public String setor(@RequestParam String setor, Model model) {
-        FuncionarioSetor funcionarioSetor = FuncionarioSetor.valueOf(setor.toUpperCase());
-        List<Funcionario> funcionarios = funcRepository.findBySetor(funcionarioSetor);
-
-        model.addAttribute("funcionarios", funcionarios);
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("funcionarios", funcRepository.findAll());
         return "home";
+    }
+
+    @GetMapping
+    public String setor(@RequestParam("setor") String setor, Model model) {
+        FuncionarioSetor funcionarioSetor = FuncionarioSetor.valueOf(setor.toUpperCase());
+        model.addAttribute("funcionarios", funcRepository.findBySetor(funcionarioSetor));
+        return "home";
+    }
+
+    @GetMapping("tela-inicial")
+    public String redirecionar() {
+        return "redirect:/home";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

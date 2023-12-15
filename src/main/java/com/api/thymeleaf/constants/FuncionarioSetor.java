@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FuncionarioSetor {
 
-    ADMINISTRATIVO("Administrativo"), RH("RH"), TECNOLOGIA("Tecnologia");
-
-    private final String value;
+    ADMINISTRATIVO,
+    RH,
+    TECNOLOGIA
 }
